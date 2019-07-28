@@ -81,6 +81,21 @@ export function displayPlayer(){
   setDisplayCell(getPlayer());
 }
 
+export function displayOthers(others){
+  const otherCells = document.querySelectorAll('.display__table [data-type="other"]');
+  if(otherCells.length){
+    [...otherCells].forEach(function(otherCell){
+      const cellData = otherCell.dataset;
+      resetDisplayCell(cellData.x,cellData.y)
+    });
+
+  }
+  others.forEach(function(other){
+    setDisplayCell(other);
+  })
+  
+}
+
 export function setDisplayMessage(msg){
   $('.display__message').text(msg)
 }

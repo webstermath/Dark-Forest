@@ -1,5 +1,5 @@
 
-import {getMatrixCell} from '../Packages/matrix.js';
+import {getMatrixCell, isOutside} from '../Packages/matrix.js';
 import {getPaletteForLevel} from './colorList.js';
 import {initializeColorMap, getColorMap} from './color.js';
 import {initializeBackgroundColorMap, getBackgroundColorMap} from './backgroundColor.js';
@@ -52,4 +52,9 @@ export function getMapCellIcon(x,y){
 
 export function getMapCell(x,y){
   return R.clone(getMatrixCell(MAP,x,y))
+}
+
+export function isOutsideMap(x,y){
+  return isOutside(MAP,[x,y])
+  
 }

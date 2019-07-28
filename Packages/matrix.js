@@ -74,7 +74,7 @@ export function getMatrixDims(matrix){
 }
 
 export function addVectors(a,b){
- return [+a[0] + +b[0], +a[1] + +b[1]];
+ return R.zipWith(R.add)(a)(b);
 }
 
 export const Matrix = {

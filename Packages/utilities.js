@@ -24,11 +24,11 @@ export function getRandN(max){
 }
 
 
-function getRandXY(lenX,lenY){
+export function getRandXY(lenX,lenY){
  return [getRandInt(lenX) - 1,getRandInt(lenY) - 1]
 }
 
-function getRandMove(){
+export function getRandMove(){
   var moves = [[1,0],[-1, 0],[0, 1],[0, -1]];
   return getRandArrVal(moves)
 }

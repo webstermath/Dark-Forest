@@ -1,6 +1,7 @@
 
 import {getMapCellIcon, getMapLengthX} from './Map/main.js';
-
+import {getDarknessColumn} from './darkness.js'
+import {getOtherAtXY} from './others.js';
 var PLAYER;
 
 
@@ -32,8 +33,6 @@ export function getPlayerProp(key){
 export function setPlayerXY(XY){
  updatePlayer({x: XY[0], y: XY[1]})
 }
-
-
 
 export function getPlayerX(){
   return getPlayerProp('x')
@@ -92,9 +91,17 @@ export function isPlayerAtEnd(){
   
 }
 
+export function isPlayerInDarkness(){
+  return getDarknessColumn() >= getPlayerX();
+}
+
 export function isPlayerInRiver(){
   return getMapCellIcon(...getPlayerXY()) === '≈';
   
+}
+
+export function isPlayerOtherConflict(){
+  return getOtherAtXY(...getPlayerXY());
 }
 
 // redo

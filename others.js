@@ -1,66 +1,152 @@
-import {import {getMapCellIcon, getMapLengthX, getMapLengthY} from './Map/main.js';
+import {getMapCellIcon, getMapLengthX, getMapLengthY, isOutsideMap} from './Map/main.js';
+import {getRandMove} from './Packages/utilities.js';
+import {addVectors} from './Packages/matrix.js';
+const {ceil, floor, min, max, random} = Math;
 
-const {ceil, floor, min, random} = Math;
+const log = R.tap(console.log)
 
 const OTHERS = [];
 
 const PROPS ={
   P:{
-    m:"†|/"
+    m:"†|/",
+    style: {
+     color: 'black'
+    }
   },
   L:{
-    m:"†|/,"
+    m:"†|/,",
+    style: {
+     color: 'gold'
+    }
   },
-  L:{
-    m:"†|/, "
-    
+  W:{
+    m:"†|/, ",
+    style: {
+     color: 'gray'
+    }
   }
   
 }
 
+
+
 // move others
+export function moveOthers(){
+ OTHERS.forEach(function(other, i){
+   const newXY = getMove(other);
+   if(isNoOtherConflict(...newXY, getOtherM(other), i)) setOtherXY(other, ...newXY);
+ });
+}
+
+function getMove(other){
+return  addVectors(getRandMove(),getOtherXY(other))
+}
+
+function isOtherConflict(x,y,m, ind){
+  return R.cond([
+    [isOtherOutsideMap, R.T],
+    [isOtherCellNotAllowed, R.T],
+    [isSpriteOtherConflict, R.T]
+  ])({x,y, m, ind})
+}
+
+const isNoOtherConflict = R.complement(isOtherConflict);
 
 
+function getOtherM({icon}={}){
+  return PROPS[icon].m
+  
+}
+
+function getOtherMapIcon({x,y}={}){
+  return getMapCellIcon(x,y);
+}
+
+function setOtherXY(other, x, y){
+   other.x = x;
+   other.y = y;
+}
+
+function getOtherXY(other){
+  return [other.x, other.y];
+  
+}
+//object -> boolean
+//{x,y,[ind]} -> boolean
+const getOthersWithoutInd = R.ifElse(R.has('ind'), R.o(R.remove(R.__,1,OTHERS),R.prop('ind')), R.always(OTHERS));
+
+//object -> boolean
+//{x,y} -> boolean
+const isOtherOutsideMap = R.o(R.apply(isOutsideMap),getOtherXY)
+
+//object -> boolean
+//{x,y} -> boolean
+const isOtherCellAllowed =  R.converge(R.includes,[getOtherMapIcon,R.prop('m')]);
+
+//object -> boolean
+//{x,y} -> boolean
+const isOtherCellNotAllowed =  R.complement(isOtherCellAllowed);
+
+//object -> boolean
+//{x,y} -> boolean
+const isSpriteOtherConflict =  R.converge(R.any,[R.o(R.whereEq,R.pick(['x','y'])),getOthersWithoutInd]);
+
+export function getOtherAtXY(x,y){
+  return R.find(R.whereEq({x,y}))(OTHERS);
+}
+
+
+export function getVisibleOthers(){
+  return R.filter(
+    R.o(R.complement(R.equals)(R.identity('†')),R.o(R.apply(getMapCellIcon),R.props(['x','y'])))
+  )(OTHERS);
+}
 
 export function initializeOthers(level){
-  Others.length = 0;
-   Others.push(...R.map(generateOther)(getOtherIconList(level)))
+  OTHERS.length = 0;
+   OTHERS.push(...R.map(generateOther)(getOtherIconList(level)))
 }
 
 function generateOther(icon){
-  const other = PROPS[icon];
-  return Object.assign({icon}, getOtherXY(other.m));
+  const {m,style} = PROPS[icon];
+  return Object.assign({icon}, generateOtherXY(m),{style},{type: 'other'});
 }
 
 function getOtherIconList(level){
   return R.compose(
     R.flatten,
     R.map(R.apply(R.curry(listOther)(level))),
-    )[['P',11,5], ['L',15,7],['W',17,9]];
+    )([['P',11,5], ['L',15,7],['W',17,9]]);
 }
 
 
 function listOther(level, icon, startLevel, repeat){
-  return Array(min(0, ceil((level - startLevel + 1)/3))).fill(icon);
+  return Array(max(0, ceil((level - startLevel + 1)/3))).fill(icon);
 }
 
 
 
-function getOtherXY(m){
+function generateOtherXY(m){
   var result;
-  const xMin = floor(getMapLengthX()/4);
-  const xRange = floor(getMapLengthX() * 3 / 4) - 2;
+  const xMin = floor(getMapLengthX()/5);
+  const xRange = floor(getMapLengthX() * 4 / 5) - 2;
   const yMin = 1;
   const yRange = getMapLengthY() - 2;
+  let i=0;
   while(!result){
+    
     let x = xMin + floor(xRange * random());
     let y = yMin + floor(yRange * random());
-    if(!m.includes(getMapCellIcon(x,y))) continue;
-    if(R.none(R.eqProps(['x','y'])({x,y}))OTHERS) continue;
+    if(R.includes(getMapCellIcon(x,y), m)) continue;
+    if(R.any(R.eqProps(['x','y'])({x,y}))(OTHERS)) continue;
     result = {x,y}
   }
+  
   return result;
 }
+
+
 
 
 /*TODO

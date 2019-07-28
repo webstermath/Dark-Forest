@@ -14,10 +14,9 @@ export function getNewDarknessColumn(){
   const divided = DARKNESS / 2;
   const column = abs(floor(divided))
   return column === divided ? column : null;
-  
-  
 }
 
-export function isPlayerInDarkness(){
-  return floor(DARKNESS/2) >= getPlayerX();
+export function getDarknessColumn(){
+  return floor(DARKNESS/2)
 }
+
