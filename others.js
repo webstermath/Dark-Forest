@@ -1,4 +1,4 @@
-import {import {getMapCellIcon, getMapLengthX, getMapLengthY} from '/Map/main.js';
+import {import {getMapCellIcon, getMapLengthX, getMapLengthY} from './Map/main.js';
 
 const {ceil, floor, min, random} = Math;
 

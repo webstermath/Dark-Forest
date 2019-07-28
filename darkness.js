@@ -1,4 +1,4 @@
-import {getPlayerX} from '/player.js';
+import {getPlayerX} from './player.js';
 
 var DARKNESS;
 

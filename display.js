@@ -1,8 +1,8 @@
-import {sleep} from '/Packages/utilities.js';
-import {$$} from '/Packages/$$.js';
+import {sleep} from './Packages/utilities.js';
+import {$$} from './Packages/$$.js';
 
-import {getMapCell} from '/Map/main.js';
-import {getPlayer} from '/player.js';
+import {getMapCell} from './Map/main.js';
+import {getPlayer} from './player.js';
 
 
 export function initializeDisplay(map, caption = '', message ='', instruction=''){

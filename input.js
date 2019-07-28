@@ -1,4 +1,4 @@
-import {movePlayerRight, movePlayerLeft, movePlayerUp, movePlayerDown} from '/player.js';
+import {movePlayerRight, movePlayerLeft, movePlayerUp, movePlayerDown} from './player.js';
 
 
 function getInputObj({key, keyCode, ctrlKey, shiftKey, altKey, code} = {}){

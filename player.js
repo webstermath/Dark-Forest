@@ -1,5 +1,5 @@
 
-import {getMapCellIcon, getMapLengthX} from '/Map/main.js';
+import {getMapCellIcon, getMapLengthX} from './Map/main.js';
 
 var PLAYER;
 
