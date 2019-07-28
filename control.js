@@ -1,18 +1,18 @@
-import {sleep} from '/Packages/utilities.js';
+import {sleep} from './Packages/utilities.js';
 
-import {getLenY} from '/Packages/matrix.js';
+import {getLenY} from './Packages/matrix.js';
 
-import {initializeMap,getMap,getMapLengthY} from '/Map/main.js';
+import {initializeMap,getMap,getMapLengthY} from './Map/main.js';
 import {initializePlayer, getPlayerLevel, getPlayerX, setPlayerXY, isPlayerAtEnd, levelUpPlayer,
- resetPlayerPath, isPlayerInRiver,getPlayerPath} from '/player.js';
-import {initializeDarkness, getNewDarknessColumn, isPlayerInDarkness} from '/darkness.js'
-import {playerMoved, spacePressed} from '/input.js';
+ resetPlayerPath, isPlayerInRiver,getPlayerPath} from './player.js';
+import {initializeDarkness, getNewDarknessColumn, isPlayerInDarkness} from './darkness.js'
+import {playerMoved, spacePressed} from './input.js';
 
-import {initializePalette} from  '/Map/colorList.js'
+import {initializePalette} from  './Map/colorList.js'
 
-import {getCantoLength,getStanza,getStanzaLength,getStanzaWordCount, getStanzaTotal} from '/Canto/main.js'
+import {getCantoLength,getStanza,getStanzaLength,getStanzaWordCount, getStanzaTotal} from './Canto/main.js'
 
-import {initializeDisplay, displayPlayer, setDisplayMessage, setGameOverMessage, setDisplayInstruction, addDarknessColumn, darken, sepiafy, brightenPath} from '/display.js';
+import {initializeDisplay, displayPlayer, setDisplayMessage, setGameOverMessage, setDisplayInstruction, addDarknessColumn, darken, sepiafy, brightenPath} from './display.js';
 
 const {floor} = Math;
 
