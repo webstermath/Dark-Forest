@@ -1,0 +1,69 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body{
+    background-color: #202020;
+    font-family: Cambria,Georgia,serif;
+
+}
+
+h1{
+  text-align: center;
+  font-size: 60px;
+  font-weight: bold;
+  color: black;
+  text-shadow: forestgreen 0px 0px 38px;
+  
+}
+
+#dark-forest{
+  display: flex;
+  justify-content: center;
+  
+}
+
+.display{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+.display__table{
+  border-collapse: collapse;
+}
+.display__caption{
+  font-size: 26px;
+  color: #606060;
+}
+
+.display__table-body{
+  font-family: Consolas, monaco, monospace;
+  font-size: 12px;
+}
+
+
+.display__message{
+  font-size: 24px;
+  font-style: italic;
+  text-shadow: 2px 2px 6px deepskyblue;
+  color: azure;
+}
+
+.display__message.game-over-message{
+  font-size: 24px;
+  font-style: none;
+  text-shadow: 2px 2px 14px red;
+  color: black;
+}
+
+.display__instruction{
+  font-variant: all-small-caps;
+  font-family: monospace;
+  font-size: 30px;
+  
+}

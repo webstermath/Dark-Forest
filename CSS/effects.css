@@ -1,0 +1,26 @@
+
+.darkness{
+  background-color: midnightblue !important;
+  color: dimgray !important;
+  
+}
+.pulse{
+  font-weight: bold;
+  
+  
+}
+
+.brighten{
+  filter: brightness(150%);
+}
+
+.blinking{
+	animation:blinkingText 1s infinite;
+}
+
+@keyframes blinkingText{
+	0%{	color: white;	}
+	49%{	color: transparent;	}
+	50%{	color: transparent;	}
+	100%{	color: white;	}
+}
