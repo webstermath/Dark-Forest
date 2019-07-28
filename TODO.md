@@ -1,7 +1,7 @@
 # TODO
 
 ### Virgil
--make Virgil
+- make Virgil
 - Virgil is light blue V
 - Virgil appears between 2 and 6 spaces ahead
 - Virgil appears on path until player is x-1 away
