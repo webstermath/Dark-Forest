@@ -22,7 +22,7 @@ const {floor} = Math;
 
 $(document).ready(() => init());
 
-async function init(level = 46){
+async function init(level = 1){
  initializePlayer(level);
  initializePalette(getStanzaTotal());
  start()
