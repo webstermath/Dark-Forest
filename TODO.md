@@ -1,12 +1,10 @@
 # TODO
 
 ### Virgil
-- make Virgil
-- Virgil is light blue V
-- Virgil appears between 2 and 6 spaces ahead
-- Virgil appears on path until player is x-1 away
-- if Virgil lands on other other is removed
-- when Virgil is within 6 of end, appears on exit
+- some kind of effect when Virgil kills otherd
+
+### Last Stanza
+- make easier somehow
 
 ## IDEAS
 
