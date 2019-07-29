@@ -5,15 +5,16 @@ import {getLenY} from './Packages/matrix.js';
 import {initializeMap,getMap,getMapLengthY} from './Map/main.js';
 import {initializePlayer, getPlayerLevel, getPlayerX, setPlayerXY, isPlayerAtEnd, levelUpPlayer,
  resetPlayerPath,isPlayerInDarkness, isPlayerInRiver,isPlayerOtherConflict,getPlayerPath} from './player.js';
-import {initializeOthers, getVisibleOthers, moveOthers} from "./others.js";
-import {initializeDarkness, getNewDarknessColumn} from './darkness.js'
+import {initializeOthers, moveOthers} from "./others.js";
+import {initializeDarkness, getNewDarknessColumn} from './darkness.js';
+import {resetVirgil, moveVirgil} from './virgil.js';
 import {playerMoved, spacePressed} from './input.js';
 
 import {initializePalette} from  './Map/colorList.js'
 
 import {getCantoLength,getStanza,getStanzaLength,getStanzaWordCount, getStanzaTotal} from './Canto/main.js'
 
-import {initializeDisplay, displayPlayer,displayOthers,
+import {initializeDisplay, displayPlayer,displayOthers, displayVirgil,
 setDisplayMessage, setGameOverMessage, setDisplayInstruction, addDarknessColumn, darken, sepiafy, brightenPath} from './display.js';
 
 const {floor} = Math;
@@ -21,7 +22,7 @@ const {floor} = Math;
 
 $(document).ready(() => init());
 
-async function init(level = 1){
+async function init(level = 46){
  initializePlayer(level);
  initializePalette(getStanzaTotal());
  start()
@@ -31,12 +32,13 @@ async function start(){
  resetPlayerPath();
  const level = getPlayerLevel();
  const map = initializeMap(level ,getStanzaLength(level-1) + 4,getStanzaWordCount(level-1));
- initializeOthers(level);
- initializeDarkness(level,  getStanzaTotal())
- setPlayerXY([1,floor(getMapLengthY() / 2)])
+ const others = initializeOthers(level);
+ resetVirgil();
+ initializeDarkness(level,  getStanzaTotal());
+ setPlayerXY([1,floor(getMapLengthY() / 2)]);
  initializeDisplay(map, 'Stanza '+level,'');
  displayPlayer();
- displayOthers(getVisibleOthers());
+ displayOthers(others);
  runLoop(R.slice(0,R.__,getStanza(level-1)));
 }
 
@@ -44,10 +46,12 @@ async function start(){
 
 async function runLoop(getStanzaSlice){
    await playerMoved();
-   moveOthers();
+   const others = moveOthers();
+   const virgil = moveVirgil();
    setDisplayMessage(getStanzaSlice(getPlayerX()))
    displayPlayer();
-   displayOthers(getVisibleOthers());
+   displayOthers(others);
+   displayVirgil(virgil);
    const darkX = getNewDarknessColumn();
    if(darkX !== null) addDarknessColumn(darkX);
    const finish = checkForFinished();

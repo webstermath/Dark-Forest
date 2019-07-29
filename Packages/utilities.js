@@ -7,7 +7,7 @@ const sub1 = R.add(-1);
 //n -> n -> n -> n
 const between = (low,high) => R.both(R.lte(low),R.gte(high))
 
-function getRandArrVal(arr){
+export function getRandArrVal(arr){
  var i = floor(random()*arr.length);
  return arr[i];
 }

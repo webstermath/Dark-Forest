@@ -1,5 +1,5 @@
 import {getMapCellIcon, getMapLengthX, getMapLengthY, isOutsideMap} from './Map/main.js';
-import {getRandMove} from './Packages/utilities.js';
+import {getRandMove, getRandN} from './Packages/utilities.js';
 import {addVectors} from './Packages/matrix.js';
 const {ceil, floor, min, max, random} = Math;
 
@@ -31,12 +31,22 @@ const PROPS ={
 
 
 
+
 // move others
 export function moveOthers(){
  OTHERS.forEach(function(other, i){
+   if(getRandN(10) === 1) return;
    const newXY = getMove(other);
    if(isNoOtherConflict(...newXY, getOtherM(other), i)) setOtherXY(other, ...newXY);
  });
+ return getVisibleOthers();
+}
+
+export function deleteOtherAtXY(x,y){
+  const ind = R.findIndex(R.whereEq({x,y}))(OTHERS);
+  if(ind === -1) return false;
+  OTHERS.splice(ind, 1);
+  return true;
 }
 
 function getMove(other){
@@ -89,7 +99,7 @@ const isOtherCellAllowed =  R.converge(R.includes,[getOtherMapIcon,R.prop('m')])
 const isOtherCellNotAllowed =  R.complement(isOtherCellAllowed);
 
 //object -> boolean
-//{x,y} -> boolean
+//{x,y} -> booleand
 const isSpriteOtherConflict =  R.converge(R.any,[R.o(R.whereEq,R.pick(['x','y'])),getOthersWithoutInd]);
 
 export function getOtherAtXY(x,y){
@@ -97,7 +107,7 @@ export function getOtherAtXY(x,y){
 }
 
 
-export function getVisibleOthers(){
+function getVisibleOthers(){
   return R.filter(
     R.o(R.complement(R.equals)(R.identity('†')),R.o(R.apply(getMapCellIcon),R.props(['x','y'])))
   )(OTHERS);
@@ -105,7 +115,8 @@ export function getVisibleOthers(){
 
 export function initializeOthers(level){
   OTHERS.length = 0;
-   OTHERS.push(...R.map(generateOther)(getOtherIconList(level)))
+  OTHERS.push(...R.map(generateOther)(getOtherIconList(level)))
+  return getVisibleOthers()
 }
 
 function generateOther(icon){

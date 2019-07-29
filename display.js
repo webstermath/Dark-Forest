@@ -81,6 +81,16 @@ export function displayPlayer(){
   setDisplayCell(getPlayer());
 }
 
+export function displayVirgil(virgil){
+  if(!virgil) return;
+  const virgilCell = document.querySelector('.display__table [data-type="virgil"]');
+  if(virgilCell){
+    const cellData = virgilCell.dataset;
+    resetDisplayCell(cellData.x,cellData.y)
+  }
+  setDisplayCell(virgil);
+}
+
 export function displayOthers(others){
   const otherCells = document.querySelectorAll('.display__table [data-type="other"]');
   if(otherCells.length){
