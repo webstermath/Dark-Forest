@@ -7,7 +7,9 @@ function getInputObj({key, keyCode, ctrlKey, shiftKey, altKey, code} = {}){
 
 async function inputEvent(){
   const evtP = new Promise(resolve => $(document).one('keyup', resolve));
-  return getInputObj(await evtP);
+  const evt = await evtP
+  evt.preventDefault();
+  return getInputObj(await evt);
 }
 
 
